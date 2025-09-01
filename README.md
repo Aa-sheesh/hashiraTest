@@ -1,5 +1,3 @@
----
-
 # Polynomial Coefficients from Roots (Hashira Placements Assignment)
 
 This project solves the given assignment:
