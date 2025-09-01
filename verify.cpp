@@ -22,7 +22,7 @@ cpp_int convertToDecimal(const string& value, int base) {
 }
 
 vector<cpp_int> buildPolynomial(const vector<cpp_int>& roots) {
-    vector<cpp_int> coeffs = {1}; 
+    vector<cpp_int> coeffs = {1};
     for (const auto& r : roots) {
         vector<cpp_int> newCoeffs(coeffs.size() + 1, 0);
         for (size_t i = 0; i < coeffs.size(); i++) {
@@ -32,6 +32,15 @@ vector<cpp_int> buildPolynomial(const vector<cpp_int>& roots) {
         coeffs.swap(newCoeffs);
     }
     return coeffs;
+}
+
+cpp_int evaluatePolynomial(const vector<cpp_int>& coeffs, cpp_int x) {
+    cpp_int result = 0, power = 1;
+    for (auto c : coeffs) {
+        result += c * power;
+        power *= x;
+    }
+    return result;
 }
 
 int main() {
@@ -52,7 +61,6 @@ int main() {
         roots.push_back(decimalValue);
     }
 
-    // take only first k roots
     if ((int)roots.size() > k) roots.resize(k);
 
     vector<cpp_int> coeffs = buildPolynomial(roots);
@@ -63,6 +71,11 @@ int main() {
         if (i + 1 < coeffs.size()) cout << ", ";
     }
     cout << " ]\n";
+
+    cout << "\nVerification:\n";
+    for (size_t i = 0; i < roots.size(); i++) {
+        cout << "P(r" << i + 1 << ") = " << evaluatePolynomial(coeffs, roots[i]) << "\n";
+    }
 
     return 0;
 }
